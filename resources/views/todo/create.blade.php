@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Create New Todo - TaskMaster</title>
+        <title>Create New Task - TaskMaster</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <style>
@@ -19,7 +19,7 @@
 
     <main class="flex-grow container mx-auto px-6 py-8">
         <div class="bg-white rounded-lg shadow-xl p-6 max-w-2xl mx-auto">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Todo</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Task</h1>
 
             <form action="{{ route('tasks.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -62,17 +62,13 @@
                             class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
                         Create Todo
                     </button>
-                    <a href="#" class="text-gray-600 hover:text-gray-800 transition duration-300">Cancel</a>
+                    <a href="{{ route('tasks.index') }}" class="text-gray-600 hover:text-gray-800 transition duration-300">Cancel</a>
                 </div>
             </form>
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-        </div>
-    </footer>
+   <x-footer/>
     </body>
     </html>
 
