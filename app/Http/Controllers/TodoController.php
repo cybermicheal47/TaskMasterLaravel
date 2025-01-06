@@ -8,15 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 
+
+
+// Some of the authorization i used policy while some i used normal code without policy, anywhere you see this->authorize
+//that is policy
 class TodoController extends Controller
 {
+    use AuthorizesRequests;
     // Display the list of todos
     public function index(): View
     {
 
-       $alltasks = Todotask::all();
+       $alltasks = Todotask::where('user_id', Auth::id())->paginate(6);
 
         return view('todo.index', compact('alltasks'));
     }
@@ -24,6 +31,7 @@ class TodoController extends Controller
     // Show the form for creating a new todo
     public function create(): View
     {
+        $this->authorize('create', Todotask::class);
         return view('todo.create');
     }
 
@@ -45,7 +53,7 @@ class TodoController extends Controller
             $validatedData['file_path'] = $filePath; // Save the file path
         }
 
-
+        $validatedData['user_id'] = Auth::id();
         Todotask::create($validatedData);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
@@ -53,42 +61,56 @@ class TodoController extends Controller
     }
 
     // Show details of a specific todo
-    public function show(Request $request ,$id): View
+    public function show(Todotask $todotask): View
     {
 //        $task = Todotask::findOrFail($id);
 
+//        $task = Todotask::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
+$this->authorize('view', $todotask);
+
+        return view('todo.show', compact('todotask'));
 
 
-        return view('todo.show');
     }
 
 
-    public function edit(Request $request ,$id): View
+    public function edit(Todotask $todotask): View
 
     {
-        $task = Todotask::find($id);
-        if(!$task) {
-            abort(404,'task not found');
-        }
+
+
+//        $task = Todotask::where('id',$id)->where('user_id', Auth::id())->firstOrFail();
+//        if(!$task) {
+//            abort(404,'task not found');
+//       }
+
+        $this->authorize('update', $todotask);
 
 
 
-        return view('todo.edit', compact('task'));
+        return view('todo.edit', compact('todotask'));
 
 
     }
 
     // Update a specific todo
-    public function update(Request $request,$id): RedirectResponse
+    public function update(Request $request,Todotask $todotask): RedirectResponse
     {
         // Add your logic here
         //check for task id , if not redirect to hompage
 
-        $task = Todotask::find($id);
+//        $task = Todotask::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+//
+//
+//        if (!$task) {
+//              return redirect()->route('tasks.index')->with('error', 'Task not found.');
+//        }
 
-        if (!$task) {
-              return redirect()->route('tasks.index')->with('error', 'Task not found.');
-        }
+        $this->authorize('update', $todotask);
+
+
+
 
         //validate the updated item
 
@@ -104,8 +126,8 @@ class TodoController extends Controller
         //check if a new image is added , if it is delete old image
 
         if($request->hasFile('attachment')) {
-            if ($task->file_path && Storage::disk('public')->exists($task->file_path)) {
-                Storage::disk('public')->delete($task->file_path);
+            if ($todotask->file_path && Storage::disk('public')->exists($todotask->file_path)) {
+                Storage::disk('public')->delete($todotask->file_path);
             }
             $filePath = $request->file('attachment')->store('attachments', 'public');
             $validatedData['file_path'] = $filePath;
@@ -113,7 +135,7 @@ class TodoController extends Controller
         }
 
         // Save the updated item
-        $task->update($validatedData);
+        $todotask->update($validatedData);
 
         //redirect back to all tasks or updated task view
 
@@ -126,6 +148,13 @@ class TodoController extends Controller
     {
 
         // Add your logic here
+
+
+
+        if ($todotask->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
 //since am calling the db directly no need to find id , it does that automatically
 //
         // Check if there is an attachment and delete it from storage
@@ -147,7 +176,7 @@ class TodoController extends Controller
     {
         $keywords = strtolower($request->input('search'));
 
-        $query  = Todotask::query();
+        $query  = Todotask::where('user_id', Auth::id());
 
 
         if ($keywords) {
@@ -155,7 +184,7 @@ class TodoController extends Controller
                 $q->whereRaw('LOWER(title) like ?', ['%' . $keywords . '%'])
                     ->orWhereRaw('LOWER(description) like ?', ['%' . $keywords . '%']);
             });
-            $alltasks = $query->paginate(6);
+            $alltasks = $query->paginate(6)->withQueryString();
     }
         return view('todo.index', compact('alltasks'))->with('searchTerm', $keywords);
 

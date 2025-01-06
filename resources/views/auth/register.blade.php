@@ -29,7 +29,31 @@
         <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create Your Account</h1>
 
-            <form action="#" method="POST">
+
+            <!-- Notifications -->
+            @if (session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+
+
+
+
+            <form action="{{route('register.store')}}" method="POST">
+                @csrf
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                     <input type="text" id="name" name="name" required
@@ -58,13 +82,13 @@
                            placeholder="••••••••">
                 </div>
 
-                <div class="flex items-center mb-6">
-                    <input type="checkbox" id="terms" name="terms" required
-                           class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                    <label for="terms" class="ml-2 block text-sm text-gray-700">
-                        I agree to the <a href="#" class="text-purple-600 hover:text-purple-500">Terms and Conditions</a>
-                    </label>
-                </div>
+{{--                <div class="flex items-center mb-6">--}}
+{{--                    <input type="checkbox" id="terms" name="terms" required--}}
+{{--                           class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">--}}
+{{--                    <label for="terms" class="ml-2 block text-sm text-gray-700">--}}
+{{--                        I agree to the <a href="#" class="text-purple-600 hover:text-purple-500">Terms and Conditions</a>--}}
+{{--                    </label>--}}
+{{--                </div>--}}
 
                 <div>
                     <button type="submit"
@@ -77,7 +101,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Already have an account?
-                    <a href="#" class="font-medium text-purple-600 hover:text-purple-500">Log in</a>
+                    <a href="{{route('login')}}" class="font-medium text-purple-600 hover:text-purple-500">Log in</a>
                 </p>
             </div>
         </div>

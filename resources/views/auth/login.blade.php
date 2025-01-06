@@ -27,7 +27,29 @@
         <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Login to TaskMaster</h1>
 
-            <form action="#" method="POST">
+
+
+            <!-- Notifications -->
+            @if (session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+
+            <form action="{{ route('login.authenticate') }}" method="POST">
+                @csrf
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                     <input type="email" id="email" name="email" required
@@ -44,9 +66,8 @@
 
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center">
-                        <input type="checkbox" id="remember" name="remember"
-                               class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                        <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+
+
                     </div>
                     <a href="#" class="text-sm text-purple-600 hover:text-purple-500">Forgot password?</a>
                 </div>
@@ -62,7 +83,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Don't have an account?
-                    <a href="#" class="font-medium text-purple-600 hover:text-purple-500">Sign up</a>
+                    <a href="{{route('register')}}" class="font-medium text-purple-600 hover:text-purple-500">Sign up</a>
                 </p>
             </div>
         </div>

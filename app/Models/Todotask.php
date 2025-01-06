@@ -10,6 +10,9 @@ class Todotask extends Model
     //
 
     protected $table = 'todotask';
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
 
 
     protected $fillable = [
@@ -18,8 +21,16 @@ class Todotask extends Model
         'file_path',    // Add file_path if needed
         'status',    //Page status
         'due_date',
+        'user_id',
 
     ];
+
+    // Relationship to User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
+
 
 
