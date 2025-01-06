@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -79,7 +80,7 @@ class AuthController extends Controller
         $request->session()->invalidate(); // Invalidate the session
         $request->session()->regenerateToken(); // Regenerate the CSRF token
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 
 

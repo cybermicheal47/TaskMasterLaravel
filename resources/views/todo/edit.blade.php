@@ -14,14 +14,7 @@
         </style>
     </head>
     <body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex flex-col">
-    <header class="bg-white bg-opacity-10 backdrop-blur-md">
-        <nav class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-white font-bold text-xl">TaskMaster</a>
-                <a href="#" class="text-white hover:text-purple-200 transition duration-300">Back to List</a>
-            </div>
-        </nav>
-    </header>
+   <x-task-header/>
 
     <main class="flex-grow container mx-auto px-6 py-8">
         <div class="bg-white rounded-lg shadow-xl p-6 max-w-2xl mx-auto">
@@ -84,11 +77,7 @@
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-        </div>
-    </footer>
+   <x-footer/>
     </body>
     </html>
 </x-layout>

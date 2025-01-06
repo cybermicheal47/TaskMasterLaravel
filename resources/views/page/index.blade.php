@@ -1,5 +1,6 @@
 <x-layout>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,23 +16,13 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex flex-col">
-<header class="bg-white bg-opacity-10 backdrop-blur-md">
-    <nav class="container mx-auto px-6 py-3">
-        <div class="flex justify-between items-center">
-            <a href="#" class="text-white font-bold text-xl">TaskMaster</a>
-            <div>
-                <a href="#" class="text-white hover:text-purple-200 transition duration-300">Login</a>
-                <a href="#" class="ml-4 px-4 py-2 bg-white text-purple-500 rounded-full font-semibold hover:bg-purple-100 transition duration-300">Sign Up</a>
-            </div>
-        </div>
-    </nav>
-</header>
+<x-header />
 
 <main class="flex-grow container mx-auto px-6  py-12 flex flex-col md:flex-row items-center justify-center">
     <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Organize Your Life with TaskMaster</h1>
         <p class="text-xl text-purple-100 mb-8">The simple, intuitive todo app that helps you stay on top of your tasks and boost your productivity.</p>
-        <a href="/todos" class="bg-white text-purple-500 px-8 py-3 rounded-full font-semibold text-lg hover:bg-purple-100 transition duration-300 inline-block">Get Started</a>
+        <a href="{{ route('task.create') }}" class="bg-white text-purple-500 px-8 py-3 rounded-full font-semibold text-lg hover:bg-purple-100 transition duration-300 inline-block">Get Started</a>
     </div>
     <div class="md:w-1/2 flex justify-center md:justify-end" >
         <img  src="{{ asset('/images/creativity.png') }}" alt="TaskMaster App Preview" class="rounded-lg ">
@@ -67,16 +58,7 @@
     </div>
 </section>
 
-<footer class="bg-gray-800 text-white py-8">
-    <div class="container mx-auto px-6 text-center">
-        <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-        <div class="mt-4">
-            <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a>
-            <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a>
-            <a href="#" class="text-gray-400 hover:text-white mx-2">Contact Us</a>
-        </div>
-    </div>
-</footer>
+<x-footer/>
 </body>
 </html>
 

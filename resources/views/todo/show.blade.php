@@ -15,14 +15,7 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex flex-col">
-<header class="bg-white bg-opacity-10 backdrop-blur-md">
-    <nav class="container mx-auto px-6 py-3">
-        <div class="flex justify-between items-center">
-            <a href="#" class="text-white font-bold text-xl">TaskMaster</a>
-            <a href="#" class="text-white hover:text-purple-200 transition duration-300">Back to List</a>
-        </div>
-    </nav>
-</header>
+<x-task-header/>
 
 <main class="flex-grow container mx-auto px-6 py-8">
     <div class="bg-white rounded-lg shadow-xl p-6 max-w-2xl mx-auto">
@@ -40,7 +33,8 @@
 
         <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-700 mb-2">Due Date</h2>
-            <p class="text-gray-600">May 15, 2023</p>
+
+            <p class="text-gray-600"> {{ $todotask->due_date ? $todotask->due_date->format('F j, Y') : 'No due date set' }}</p>
         </div>
 
         <div class="mb-6">
@@ -70,8 +64,13 @@
 
         <div class="flex justify-between items-center">
             <div class="space-x-2">
-                <a href="#" class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition duration-300">Edit</a>
+                <a href="{{route('tasks.edit',$todotask->id)}}" class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition duration-300">Edit</a>
+
+                <form action="{{ route ('tasks.destroy', $todotask->id)  }}" class="inline-block" method="POST">
+                    @csrf
+                    @method('DELETE')
                 <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300">Delete</button>
+                </form>
             </div>
             <div>
 {{--                <label class="inline-flex items-center">--}}
@@ -82,11 +81,7 @@
     </div>
 </main>
 
-<footer class="bg-gray-800 text-white py-4">
-    <div class="container mx-auto px-6 text-center">
-        <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-    </div>
-</footer>
+<x-footer/>
 </body>
 </html>
 

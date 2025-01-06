@@ -16,18 +16,8 @@
         </style>
     </head>
     <body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex flex-col">
-    <header class="bg-white bg-opacity-10 backdrop-blur-md">
-        <nav class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-white font-bold text-xl">TaskMaster</a>
-                <div class="space-x-4">
-                    <a href="#" class="text-white hover:text-purple-200 transition duration-300">Home</a>
-                    <a href="#" class="text-white hover:text-purple-200 transition duration-300">Create Todo</a>
-                    <a href="#" class="text-white hover:text-purple-200 transition duration-300">Logout</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+
+   <x-header/>
 
     <ul>
 
@@ -67,7 +57,7 @@
                             ($task->status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
                         {{ $task->status }}
                     </span>
-                           <a href="#" class="text-blue-500 hover:text-blue-600">Edit</a>
+                           <a href="{{route('tasks.edit',$task->id)}}" class="text-blue-500 hover:text-blue-600">Edit</a>
                             @can('delete', $task)
                             <form action="{{ route ('tasks.destroy', $task->id)  }}" method="POST">
                                 @csrf
@@ -118,11 +108,7 @@
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-        </div>
-    </footer>
+        <x-footer/>
     </body>
     </html>
 

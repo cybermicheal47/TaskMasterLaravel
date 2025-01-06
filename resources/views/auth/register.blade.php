@@ -19,8 +19,8 @@
     <header class="bg-white bg-opacity-10 backdrop-blur-md">
         <nav class="container mx-auto px-6 py-3">
             <div class="flex justify-between items-center">
-                <a href="#" class="text-white font-bold text-xl">TaskMaster</a>
-                <a href="#" class="text-white hover:text-purple-200 transition duration-300">Home</a>
+                <a href="{{ route('home') }}" class="text-white font-bold text-xl">TaskMaster</a>
+                <a href="{{ route('home') }}" class="text-white hover:text-purple-200 transition duration-300"> << Back To Home</a>
             </div>
         </nav>
     </header>
@@ -107,11 +107,7 @@
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-        </div>
-    </footer>
+    <x-footer/>
     </body>
     </html>
 </x-layout>
