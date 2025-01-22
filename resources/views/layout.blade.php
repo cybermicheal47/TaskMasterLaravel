@@ -11,3 +11,6 @@
 </body>
 </body>
 </html>
+<?php
+echo ini_get('memory_limit');
+
