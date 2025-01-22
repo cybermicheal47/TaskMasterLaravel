@@ -14,6 +14,9 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
+
+RUN echo "memory_limit = 1024M" > /usr/local/etc/php/conf.d/memory-limit.ini
+
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
